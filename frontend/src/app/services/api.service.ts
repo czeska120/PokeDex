@@ -7,7 +7,11 @@ import { Observable } from 'rxjs';
 })
 export class ApiService {
   constructor(private http: HttpClient) {}
-  getDitto(): Observable<any> {
-    return this.http.get('https://pokeapi.co/api/v2/pokemon/ditto');
+  getPokemonData(url: string): Observable<any> {
+    return this.http.get(`${url}`);
+  }
+
+  getAllPokemon(): Observable<any> {
+    return this.http.get('https://pokeapi.co/api/v2/pokemon?limit=10&offset=0');
   }
 }
