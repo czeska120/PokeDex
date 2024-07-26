@@ -1,5 +1,5 @@
 .card {
-  @apply relative w-32 h-48 mb-5 p-1 overflow-x-auto text-sm border-4 border-solid bg-gradient-to-r from-amber-300 via-yellow-200 to-yellow-400 border-yellow-200 shadow-md sm:rounded-lg;
+  @apply relative w-44 h-64 p-1 overflow-x-auto text-sm border-4 border-solid bg-gradient-to-r from-amber-300 via-yellow-200 to-yellow-400 border-yellow-200 shadow-md sm:rounded-lg;
 }
 
 .card-heading {
@@ -10,18 +10,21 @@
   @apply font-bold;
 }
 
-.card-heading > p:nth-child(2) {
-  @apply italic;
+.card-img {
+  @apply border-2 border-solid border-stone-300 bg-gray-100 flex justify-center sm:rounded-sm;
 }
 
-.card-img {
-  @apply border-2 border-solid border-stone-300 bg-gray-100 sm:rounded-sm;
+.card-img > img {
+  @apply w-[80%];
 }
 
 .card-content {
-  @apply flex flex-col p-4;
+  @apply flex w-full text-xs mt-2;
 }
 
-.card-content > div {
-  @apply w-full flex justify-between text-xs;
+.card-content > div:first-child {
+  @apply flex w-[40%] justify-center;
+}
+.card-content > div:nth-child(2) {
+  @apply flex w-[60%] justify-start;
 }

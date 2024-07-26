@@ -1,36 +1,51 @@
 <div class="bg-background min-h-screen">
-  <div class="bg-accent p-4">
-    <h1 class="text-3xl text-secondary font-heading">POKEDEX</h1>
-    <p class="text-white text-sm italic">by Franczeska Silvestre</p>
+  <div class="bg-accent py-4 px-12 flex justify-between w-full items-end">
+    <div>
+      <h1 class="text-3xl text-secondary font-heading">POKEDEX</h1>
+      <p class="text-white text-sm italic">by Franczeska Silvestre</p>
+    </div>
+    <input
+      type="search"
+      class="block w-60 h-6 rounded-md border border-gray-300 bg-gray-50 ps-10 text-sm text-gray-900 focus:border-blue-400 focus:ring-blue-400"
+      placeholder="Filter by search"
+      [(ngModel)]="searchText"
+      (ngModelChange)="filterData()"
+    />
   </div>
   <div class="flex flex-col justify-center items-center">
-    <div>Dito yung filters</div>
-    <div class="grid grid-cols-4 gap-12 p-12 justify-items-center">
-      <div class="card">ID No, Name, Photo, and Type.</div>
-      <div class="card">
+    <p>Sort by ID No, Name</p>
+    <div class="flex flex-wrap gap-12 p-12 justify-center">
+      <div class="card" *ngFor="let i of getVisibleIndices()">
         <div class="card-heading">
-          <p>Name</p>
-          <p>ID</p>
+          <p>
+            {{
+              filteredPokemonList[i].name.charAt(0).toUpperCase() +
+                filteredPokemonList[i].name.slice(1)
+            }}
+          </p>
+          <p>{{ filteredPokemonList[i].id }}</p>
         </div>
-        <div class="card-img">Hello</div>
+        <div class="card-img"><img [src]="filteredPokemonList[i].img" /></div>
         <div class="card-content">
           <div>
             <p>Type</p>
-            <p>Secret</p>
+          </div>
+          <div>
+            <p
+              *ngFor="let type of filteredPokemonList[i].types; let last = last"
+            >
+              {{ type.type.name }}<span *ngIf="!last">,&nbsp;</span>
+            </p>
           </div>
         </div>
       </div>
-      <div class="card">Hello</div>
-      <div class="card">Hello</div>
-      <div class="card">Hello</div>
-      <div class="card">Hello</div>
-      <div class="card">Hello</div>
-      <div class="card">Hello</div>
-      <div class="card">Hello</div>
-      <div class="card">Hello</div>
-      <div class="card">Hello</div>
-      <div class="card">Hello</div>
     </div>
-    <div>Add pagination</div>
+    <mat-paginator
+      [length]="filteredPokemonList.length"
+      [pageSize]="pageSize"
+      [showFirstLastButtons]="true"
+      (page)="paginator.pageIndex = $event.pageIndex"
+    >
+    </mat-paginator>
   </div>
 </div>

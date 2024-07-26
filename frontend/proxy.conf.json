@@ -1,0 +1,8 @@
+{
+  "/assets": {
+    "target": "https://assets.pokemon.com",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

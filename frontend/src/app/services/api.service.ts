@@ -12,6 +12,12 @@ export class ApiService {
   }
 
   getAllPokemon(): Observable<any> {
-    return this.http.get('https://pokeapi.co/api/v2/pokemon?limit=10&offset=0');
+    return this.http.get('https://pokeapi.co/api/v2/pokemon?limit=20&offset=0');
+  }
+
+  getPokemonPicture(id: number): Observable<any> {
+    return this.http.get(`/assets/cms2/img/pokedex/full/${id}.png`, {
+      responseType: 'blob',
+    });
   }
 }
