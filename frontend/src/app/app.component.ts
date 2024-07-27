@@ -16,6 +16,12 @@ export class AppComponent {
   pokemonList: any[] = [];
   filteredPokemonList: any[] = [];
 
+  // Sort by ID & Name
+  idSort = false;
+  idAscending = false;
+  nameSort = false;
+  nameAscending = false;
+
   constructor(private pokedex: ApiService, private sanitizer: DomSanitizer) {}
 
   ngOnInit() {
@@ -75,6 +81,7 @@ export class AppComponent {
       }, reject);
     });
   }
+
   getVisibleIndices(): number[] {
     const startIndex = this.paginator?.pageIndex * this.paginator?.pageSize;
     const endIndex = startIndex + this.paginator?.pageSize;
@@ -98,5 +105,54 @@ export class AppComponent {
         )
       );
     }
+  }
+
+  sortByID() {
+    this.idSort = true;
+    this.nameSort = false;
+    this.idAscending = !this.idAscending;
+
+    if (this.idAscending)
+      this.filteredPokemonList = this.pokemonList
+        .slice()
+        .sort((a: any, b: any) => b.id - a.id);
+    else
+      this.filteredPokemonList = this.pokemonList
+        .slice()
+        .sort((a: any, b: any) => a.id - b.id);
+    console.log(this.filteredPokemonList);
+  }
+
+  sortByName() {
+    this.nameSort = true;
+    this.idSort = false;
+    this.nameAscending = !this.nameAscending;
+    console.log(this.filteredPokemonList);
+    if (this.nameAscending)
+      this.filteredPokemonList = this.pokemonList
+        .slice()
+        .sort((a: any, b: any) => {
+          if (b.name > a.name) {
+            return 1;
+          } else if (b.name < a.name) {
+            return -1;
+          } else {
+            return 0;
+          }
+        });
+    else
+      this.filteredPokemonList = this.pokemonList
+        .slice()
+        .sort((a: any, b: any) => {
+          if (a.name > b.name) {
+            return 1;
+          } else if (a.name < b.name) {
+            return -1;
+          } else {
+            return 0;
+          }
+        });
+
+    console.log(this.filteredPokemonList);
   }
 }
