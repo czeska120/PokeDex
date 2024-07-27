@@ -15,12 +15,17 @@ export class AppComponent {
 
   pokemonList: any[] = [];
   filteredPokemonList: any[] = [];
+  pokemonDetails: any;
+  pokemonWeakness: any[] = [];
 
   // Sort by ID & Name
   idSort = false;
   idAscending = false;
   nameSort = false;
   nameAscending = false;
+
+  // Modal
+  isModalOpen = false;
 
   constructor(private pokedex: ApiService, private sanitizer: DomSanitizer) {}
 
@@ -120,14 +125,14 @@ export class AppComponent {
       this.filteredPokemonList = this.pokemonList
         .slice()
         .sort((a: any, b: any) => a.id - b.id);
-    console.log(this.filteredPokemonList);
+    // console.log(this.filteredPokemonList);
   }
 
   sortByName() {
     this.nameSort = true;
     this.idSort = false;
     this.nameAscending = !this.nameAscending;
-    console.log(this.filteredPokemonList);
+    // console.log(this.filteredPokemonList);
     if (this.nameAscending)
       this.filteredPokemonList = this.pokemonList
         .slice()
@@ -153,6 +158,49 @@ export class AppComponent {
           }
         });
 
-    console.log(this.filteredPokemonList);
+    // console.log(this.filteredPokemonList);
+  }
+
+  cardDetails(name: string) {
+    console.log(name);
+    this.toggleModal(true);
+    this.pokedex.getPokemonDetails(name).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.pokemonDetails = res;
+        const id = this.pokemonDetails.id.toString().padStart(3, '0');
+
+        this.pokedex.getPokemonPicture(id).subscribe({
+          next: (blob: any) => {
+            console.log('Picture received');
+            const objectURL = URL.createObjectURL(blob);
+            this.pokemonDetails['img'] =
+              this.sanitizer.bypassSecurityTrustUrl(objectURL);
+          },
+          error: (err) => {
+            console.error('Error fetching picture:', err);
+          },
+          complete: () => {
+            console.log('Picture fetching complete');
+          },
+        });
+      },
+      error: (err) => {
+        console.error('Error fetching Pokemon details:', err);
+      },
+      complete: () => {
+        console.log('Fetching Pokemon details complete');
+        console.log(this.pokemonDetails);
+      },
+    });
+  }
+
+  findWeakness(types: any[]) {
+    console.log(types);
+  }
+
+  toggleModal(isModalOpen: boolean) {
+    if (isModalOpen != null) this.isModalOpen = isModalOpen;
+    else this.isModalOpen = !this.isModalOpen;
   }
 }

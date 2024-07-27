@@ -1,5 +1,9 @@
 .card {
-  @apply relative w-44 h-64 p-1 overflow-x-auto text-sm border-4 border-solid bg-gradient-to-r from-amber-300 via-yellow-200 to-yellow-400 border-yellow-200 shadow-md sm:rounded-lg;
+  @apply relative w-44 h-64 p-1 overflow-x-auto text-sm border-4 border-solid bg-gradient-to-r from-amber-300 via-yellow-200 to-yellow-400 border-yellow-200 shadow-md sm:rounded-lg hover:shadow-lg;
+  transition: transform 0.3s;
+  &:hover {
+    transform: scale(1.05);
+  }
 }
 
 .card-heading {

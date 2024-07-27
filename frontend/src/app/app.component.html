@@ -71,30 +71,39 @@
       </button>
     </div>
     <div class="flex flex-wrap gap-12 mt-2 justify-center">
-      <div class="card" *ngFor="let i of getVisibleIndices()">
-        <div class="card-heading">
-          <p>
-            {{
-              filteredPokemonList[i].name.charAt(0).toUpperCase() +
-                filteredPokemonList[i].name.slice(1)
-            }}
-          </p>
-          <p>{{ filteredPokemonList[i].id }}</p>
-        </div>
-        <div class="card-img"><img [src]="filteredPokemonList[i].img" /></div>
-        <div class="card-content">
-          <div>
-            <p>Type</p>
-          </div>
-          <div>
-            <p
-              *ngFor="let type of filteredPokemonList[i].types; let last = last"
-            >
-              {{ type.type.name }}<span *ngIf="!last">,&nbsp;</span>
+      <button
+        type="button"
+        (click)="cardDetails(filteredPokemonList[i].name)"
+        *ngFor="let i of getVisibleIndices()"
+      >
+        <div class="card">
+          <div class="card-heading">
+            <p>
+              {{
+                filteredPokemonList[i].name.charAt(0).toUpperCase() +
+                  filteredPokemonList[i].name.slice(1)
+              }}
             </p>
+            <p>{{ filteredPokemonList[i].id }}</p>
+          </div>
+          <div class="card-img"><img [src]="filteredPokemonList[i].img" /></div>
+          <div class="card-content">
+            <div>
+              <p>Type</p>
+            </div>
+            <div>
+              <p
+                *ngFor="
+                  let type of filteredPokemonList[i].types;
+                  let last = last
+                "
+              >
+                {{ type.type.name }}<span *ngIf="!last">,&nbsp;</span>
+              </p>
+            </div>
           </div>
         </div>
-      </div>
+      </button>
     </div>
     <div class="w-full justify-end text-sm">
       <mat-paginator
@@ -107,3 +116,126 @@
     </div>
   </div>
 </div>
+<app-modal [isOpen]="isModalOpen" (eventToggleModal)="toggleModal($event)">
+  <div class="grid grid-cols-3 gap-2 text-white">
+    <div class="col-span-1">
+      <div
+        class="border-4 border-solid bg-background border-amber-300 sm:rounded-md"
+      >
+        <img [src]="pokemonDetails?.img" />
+      </div>
+      <p class="text-lg font-semibold text-center mt-2">
+        No. {{ pokemonDetails?.id }}
+      </p>
+    </div>
+    <div class="col-span-2">
+      <p class="text-2xl font-medium font-heading">
+        {{ pokemonDetails?.name.toUpperCase() }}
+      </p>
+      <div class="grid grid-cols-2 gap-2 p-2">
+        <div class="flex">
+          <ng-icon
+            name="matArrowRightOutline"
+            size="20px"
+            class="mr-2"
+          ></ng-icon>
+          <p class="font-heading text-secondary">Height</p>
+        </div>
+        <div>
+          <p>{{ pokemonDetails?.height }}</p>
+        </div>
+        <div class="flex">
+          <ng-icon
+            name="matArrowRightOutline"
+            size="20px"
+            class="mr-2"
+          ></ng-icon>
+          <p class="font-heading text-secondary">Weight</p>
+        </div>
+        <div>
+          <p>{{ pokemonDetails?.weight }}</p>
+        </div>
+        <div class="flex">
+          <ng-icon
+            name="matArrowRightOutline"
+            size="20px"
+            class="mr-2"
+          ></ng-icon>
+          <p class="font-heading text-secondary">Base EXP</p>
+        </div>
+        <div>
+          <p>{{ pokemonDetails?.base_experience }}</p>
+        </div>
+        <div class="flex">
+          <ng-icon
+            name="matArrowRightOutline"
+            size="20px"
+            class="mr-2"
+          ></ng-icon>
+          <p class="font-heading text-secondary">Abilities</p>
+        </div>
+        <div>
+          <span
+            *ngFor="let ability of pokemonDetails?.abilities; let last = last"
+          >
+            {{ ability.ability.name }}<span *ngIf="!last">,&nbsp;</span>
+          </span>
+        </div>
+        <div class="flex">
+          <ng-icon
+            name="matArrowRightOutline"
+            size="20px"
+            class="mr-2"
+          ></ng-icon>
+          <p class="font-heading text-secondary">Types</p>
+        </div>
+        <div>
+          <span *ngFor="let type of pokemonDetails?.types; let last = last">
+            {{ type.type.name }}<span *ngIf="!last">,&nbsp;</span>
+          </span>
+        </div>
+        <div class="flex">
+          <ng-icon
+            name="matArrowRightOutline"
+            size="20px"
+            class="mr-2"
+          ></ng-icon>
+          <p class="font-heading text-secondary">Weakness</p>
+        </div>
+        <div>
+          <p>To be added</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr />
+
+  <div class="grid grid-cols-3 gap-4 mt-2 px-4 text-white">
+    <ng-container *ngFor="let stat of pokemonDetails?.stats; let i = index">
+      <ng-container *ngIf="i % 2 === 0">
+        <div>
+          <div *ngIf="pokemonDetails?.stats[i]">
+            <p>
+              <span>{{ pokemonDetails?.stats[i].base_stat }}</span>
+              &nbsp;
+              {{
+                pokemonDetails?.stats[i].stat.name.charAt(0).toUpperCase() +
+                  pokemonDetails?.stats[i].stat.name.slice(1)
+              }}
+            </p>
+          </div>
+          <div *ngIf="pokemonDetails?.stats[i + 1]">
+            <p>
+              <span>{{ pokemonDetails?.stats[i + 1].base_stat }}</span>
+              &nbsp;
+              {{
+                pokemonDetails?.stats[i + 1].stat.name.charAt(0).toUpperCase() +
+                  pokemonDetails?.stats[i + 1].stat.name.slice(1)
+              }}
+            </p>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+</app-modal>

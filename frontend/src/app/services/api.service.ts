@@ -20,4 +20,8 @@ export class ApiService {
       responseType: 'blob',
     });
   }
+
+  getPokemonDetails(name: string): Observable<any> {
+    return this.http.get(`https://pokeapi.co/api/v2/pokemon/${name}`);
+  }
 }
