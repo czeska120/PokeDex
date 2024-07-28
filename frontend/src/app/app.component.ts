@@ -161,10 +161,11 @@ export class AppComponent {
     // console.log(this.filteredPokemonList);
   }
 
-  cardDetails(name: string) {
-    console.log(name);
+  cardDetails(key: any) {
+    console.log(key);
     this.toggleModal(true);
-    this.pokedex.getPokemonDetails(name).subscribe({
+    this.pokemonDetails = null;
+    this.pokedex.getPokemonDetails(key).subscribe({
       next: (res) => {
         console.log(res);
         this.pokemonDetails = res;
@@ -176,6 +177,7 @@ export class AppComponent {
             const objectURL = URL.createObjectURL(blob);
             this.pokemonDetails['img'] =
               this.sanitizer.bypassSecurityTrustUrl(objectURL);
+            this.findWeakness(this.pokemonDetails.types);
           },
           error: (err) => {
             console.error('Error fetching picture:', err);
@@ -196,7 +198,175 @@ export class AppComponent {
   }
 
   findWeakness(types: any[]) {
+    this.pokemonWeakness = [];
     console.log(types);
+    types.forEach((type) => {
+      var name = type.type.name;
+      console.log(name);
+      switch (name) {
+        case 'normal':
+          {
+            this.pokemonWeakness.push('rock');
+            this.pokemonWeakness.push('ghost');
+            this.pokemonWeakness.push('steel');
+          }
+          break;
+        case 'fighting':
+          {
+            this.pokemonWeakness.push('flying');
+            this.pokemonWeakness.push('poison');
+            this.pokemonWeakness.push('psychic');
+            this.pokemonWeakness.push('bug');
+            this.pokemonWeakness.push('ghost');
+            this.pokemonWeakness.push('fairy');
+          }
+          break;
+        case 'flying':
+          {
+            this.pokemonWeakness.push('rock');
+            this.pokemonWeakness.push('steel');
+            this.pokemonWeakness.push('electric');
+          }
+          break;
+        case 'poison':
+          {
+            this.pokemonWeakness.push('poison');
+            this.pokemonWeakness.push('ground');
+            this.pokemonWeakness.push('rock');
+            this.pokemonWeakness.push('ghost');
+            this.pokemonWeakness.push('steel');
+          }
+          break;
+        case 'ground':
+          {
+            this.pokemonWeakness.push('flying');
+            this.pokemonWeakness.push('bug');
+            this.pokemonWeakness.push('grass');
+          }
+          break;
+        case 'rock':
+          {
+            this.pokemonWeakness.push('fighting');
+            this.pokemonWeakness.push('ground');
+            this.pokemonWeakness.push('steel');
+          }
+          break;
+        case 'bug':
+          {
+            this.pokemonWeakness.push('fighting');
+            this.pokemonWeakness.push('flying');
+            this.pokemonWeakness.push('poison');
+            this.pokemonWeakness.push('ghost');
+            this.pokemonWeakness.push('steel');
+            this.pokemonWeakness.push('fire');
+            this.pokemonWeakness.push('fairy');
+          }
+          break;
+        case 'ghost':
+          {
+            this.pokemonWeakness.push('normal');
+            this.pokemonWeakness.push('dark');
+          }
+          break;
+        case 'steel':
+          {
+            this.pokemonWeakness.push('steel');
+            this.pokemonWeakness.push('fire');
+            this.pokemonWeakness.push('water');
+            this.pokemonWeakness.push('electric');
+          }
+          break;
+        case 'fire':
+          {
+            this.pokemonWeakness.push('rock');
+            this.pokemonWeakness.push('fire');
+            this.pokemonWeakness.push('water');
+            this.pokemonWeakness.push('dragon');
+          }
+          break;
+        case 'water':
+          {
+            this.pokemonWeakness.push('water');
+            this.pokemonWeakness.push('grass');
+            this.pokemonWeakness.push('dragon');
+          }
+          break;
+        case 'grass':
+          {
+            this.pokemonWeakness.push('flying');
+            this.pokemonWeakness.push('poison');
+            this.pokemonWeakness.push('bug');
+            this.pokemonWeakness.push('steel');
+            this.pokemonWeakness.push('fire');
+            this.pokemonWeakness.push('grass');
+            this.pokemonWeakness.push('dragon');
+          }
+          break;
+
+        case 'electric':
+          {
+            this.pokemonWeakness.push('ground');
+            this.pokemonWeakness.push('grass');
+            this.pokemonWeakness.push('electric');
+            this.pokemonWeakness.push('dragon');
+          }
+          break;
+        case 'psychic':
+          {
+            this.pokemonWeakness.push('steel');
+            this.pokemonWeakness.push('psychic');
+            this.pokemonWeakness.push('dark');
+          }
+          break;
+        case 'ice':
+          {
+            this.pokemonWeakness.push('steel');
+            this.pokemonWeakness.push('fire');
+            this.pokemonWeakness.push('water');
+            this.pokemonWeakness.push('ice');
+          }
+          break;
+        case 'dragon':
+          {
+            this.pokemonWeakness.push('steel');
+            this.pokemonWeakness.push('fairy');
+          }
+          break;
+        case 'dark':
+          {
+            this.pokemonWeakness.push('fighting');
+            this.pokemonWeakness.push('dark');
+            this.pokemonWeakness.push('fairy');
+          }
+          break;
+        case 'fairy':
+          {
+            this.pokemonWeakness.push('poison');
+            this.pokemonWeakness.push('steel');
+            this.pokemonWeakness.push('fire');
+          }
+          break;
+
+        default:
+          console.log('none');
+      }
+    });
+    this.pokemonWeakness = this.pokemonWeakness.filter(
+      (value, index) => this.pokemonWeakness.indexOf(value) === index
+    );
+    console.log(this.pokemonWeakness);
+  }
+
+  onNext(id: number) {
+    id++;
+    this.cardDetails(id);
+    console.log('Next!');
+  }
+  onPrevious(id: number) {
+    id--;
+    this.cardDetails(id);
+
+    console.log('Previous!');
   }
 
   toggleModal(isModalOpen: boolean) {

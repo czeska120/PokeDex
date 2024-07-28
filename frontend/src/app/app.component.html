@@ -116,7 +116,12 @@
     </div>
   </div>
 </div>
-<app-modal [isOpen]="isModalOpen" (eventToggleModal)="toggleModal($event)">
+<app-modal
+  [isOpen]="isModalOpen"
+  (eventToggleModal)="toggleModal($event)"
+  (eventNext)="onNext(pokemonDetails?.id)"
+  (eventPrevious)="onPrevious(pokemonDetails?.id)"
+>
   <div class="grid grid-cols-3 gap-2 text-white">
     <div class="col-span-1">
       <div
@@ -203,7 +208,9 @@
           <p class="font-heading text-secondary">Weakness</p>
         </div>
         <div>
-          <p>To be added</p>
+          <span *ngFor="let type of pokemonWeakness; let last = last">
+            {{ type }}<span *ngIf="!last">,&nbsp;</span>
+          </span>
         </div>
       </div>
     </div>

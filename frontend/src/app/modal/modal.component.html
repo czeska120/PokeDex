@@ -1,10 +1,17 @@
 <div *ngIf="isOpen" class="fixed inset-0 flex items-center justify-center">
   <div
-    class="absolute inset-0 z-40 h-full w-full bg-gray-800 opacity-50"
+    class="absolute inset-0 z-10 h-full w-full bg-gray-800 opacity-50"
     (click)="closeModal()"
   ></div>
+  <button type="button" (click)="goPrevious()" class="arrow">
+    <ng-icon
+      name="matChevronLeftOutline"
+      size="32px"
+      class="mr-0 text-white"
+    ></ng-icon>
+  </button>
 
-  <div class="z-50 w-2/5 card">
+  <div class="z-20 w-2/5 card">
     <div class="flex place-content-end gap-3">
       <button (click)="closeModal()" class="flex text-neutral-200">
         <ng-icon
@@ -18,4 +25,12 @@
       <ng-content></ng-content>
     </div>
   </div>
+
+  <button type="button" (click)="goNext()" class="arrow">
+    <ng-icon
+      name="matChevronRightOutline"
+      size="32px"
+      class="mr-0 text-white"
+    ></ng-icon>
+  </button>
 </div>
