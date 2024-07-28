@@ -36,7 +36,6 @@ export class AppComponent {
   viewPokemon() {
     try {
       this.pokedex.getAllPokemon().subscribe(async (res) => {
-        console.log(res);
         var list = res.results;
         const pokemonDataPromises = list.map((pokemon: any) =>
           this.getPokemonData(pokemon)
@@ -45,12 +44,8 @@ export class AppComponent {
           // Wait for all the promises to complete
           await Promise.all(pokemonDataPromises);
 
-          console.log(this.filteredPokemonList);
-          console.log(this.pokemonList);
-
           if (this.pokemonList.length > 1) {
             this.filteredPokemonList = this.pokemonList.slice();
-            console.log(this.filteredPokemonList);
           }
 
           this.filterData();
@@ -125,14 +120,12 @@ export class AppComponent {
       this.filteredPokemonList = this.pokemonList
         .slice()
         .sort((a: any, b: any) => a.id - b.id);
-    // console.log(this.filteredPokemonList);
   }
 
   sortByName() {
     this.nameSort = true;
     this.idSort = false;
     this.nameAscending = !this.nameAscending;
-    // console.log(this.filteredPokemonList);
     if (this.nameAscending)
       this.filteredPokemonList = this.pokemonList
         .slice()
@@ -157,30 +150,25 @@ export class AppComponent {
             return 0;
           }
         });
-
-    // console.log(this.filteredPokemonList);
   }
 
   cardDetails(key: any) {
-    console.log(key);
     this.toggleModal(true);
     this.pokemonDetails = null;
     this.pokedex.getPokemonDetails(key).subscribe({
       next: (res) => {
-        console.log(res);
         this.pokemonDetails = res;
         const id = this.pokemonDetails.id.toString().padStart(3, '0');
 
         this.pokedex.getPokemonPicture(id).subscribe({
           next: (blob: any) => {
-            console.log('Picture received');
             const objectURL = URL.createObjectURL(blob);
             this.pokemonDetails['img'] =
               this.sanitizer.bypassSecurityTrustUrl(objectURL);
             this.findWeakness(this.pokemonDetails.types);
           },
           error: (err) => {
-            console.error('Error fetching picture:', err);
+            console.error(err);
           },
           complete: () => {
             console.log('Picture fetching complete');
@@ -188,21 +176,18 @@ export class AppComponent {
         });
       },
       error: (err) => {
-        console.error('Error fetching Pokemon details:', err);
+        console.error(err);
       },
       complete: () => {
         console.log('Fetching Pokemon details complete');
-        console.log(this.pokemonDetails);
       },
     });
   }
 
   findWeakness(types: any[]) {
     this.pokemonWeakness = [];
-    console.log(types);
     types.forEach((type) => {
       var name = type.type.name;
-      console.log(name);
       switch (name) {
         case 'normal':
           {
@@ -346,27 +331,23 @@ export class AppComponent {
             this.pokemonWeakness.push('fire');
           }
           break;
-
         default:
           console.log('none');
       }
     });
+    // Filter any redundant weakness
     this.pokemonWeakness = this.pokemonWeakness.filter(
       (value, index) => this.pokemonWeakness.indexOf(value) === index
     );
-    console.log(this.pokemonWeakness);
   }
 
   onNext(id: number) {
     id++;
     this.cardDetails(id);
-    console.log('Next!');
   }
   onPrevious(id: number) {
     id--;
     this.cardDetails(id);
-
-    console.log('Previous!');
   }
 
   toggleModal(isModalOpen: boolean) {

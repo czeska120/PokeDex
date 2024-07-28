@@ -14,7 +14,6 @@ export class ModalComponent {
   closeModal() {
     this.isOpen = false;
     this.eventToggleModal.emit(this.isOpen);
-    console.log('Emitted a value');
   }
 
   goNext() {
