@@ -23,12 +23,69 @@
 }
 
 .card-content {
-  @apply flex w-full text-xs mt-2;
+  @apply flex w-full h-[20%] items-start text-sm mt-2;
 }
 
 .card-content > div:first-child {
-  @apply flex w-[40%] justify-center;
+  @apply flex  w-[40%] justify-center;
 }
 .card-content > div:nth-child(2) {
-  @apply flex w-[60%] justify-start;
+  @apply flex flex-col w-[60%] justify-start gap-1;
+}
+.pokeType {
+  @apply rounded-full w-[70%] border-4 border-double border-slate-400;
+}
+.normal {
+  @apply bg-gradient-to-r from-stone-300 via-neutral-200 to-zinc-400;
+}
+.fire {
+  @apply bg-gradient-to-r from-orange-500 via-amber-400 to-red-500;
+}
+.fighting {
+  @apply bg-gradient-to-r from-amber-300 via-yellow-200 to-yellow-400;
+}
+.water {
+  @apply bg-gradient-to-r from-cyan-300 via-sky-200 to-blue-400;
+}
+.flying {
+  @apply bg-gradient-to-r from-teal-300 via-cyan-200 to-cyan-400;
+}
+.grass {
+  @apply bg-gradient-to-r from-lime-300 via-green-200 to-emerald-400;
+}
+.poison {
+  @apply bg-gradient-to-r from-violet-300 via-purple-200 to-fuchsia-400;
+}
+.electric {
+  @apply bg-gradient-to-r from-yellow-300 via-amber-200 to-yellow-400;
+}
+.ground {
+  @apply bg-gradient-to-r from-orange-800 via-amber-700 to-yellow-900  text-white;
+}
+.psychic {
+  @apply bg-gradient-to-r from-pink-300 via-rose-200 to-pink-400;
+}
+.rock {
+  @apply bg-gradient-to-r from-stone-300 via-neutral-200 to-stone-400;
+}
+.ice {
+  @apply bg-gradient-to-r from-cyan-300 via-cyan-100 to-cyan-400 rounded-full;
+}
+.bug {
+  @apply bg-gradient-to-r from-lime-300 via-emerald-200 to-lime-400 rounded-full;
+}
+.dragon {
+  @apply bg-gradient-to-r from-violet-300 via-indigo-200 to-violet-400;
+}
+.ghost {
+  @apply bg-gradient-to-r from-purple-700 via-fuchsia-600 to-purple-800 text-white;
+}
+.dark {
+  @apply bg-gradient-to-r from-stone-700 via-purple-600 to-stone-800 text-white;
+}
+.steel {
+  @apply bg-gradient-to-r from-zinc-300 via-gray-200 to-slate-400;
+}
+.fairy {
+  @apply bg-gradient-to-r from-rose-300 via-pink-200 to-pink-400;
 }

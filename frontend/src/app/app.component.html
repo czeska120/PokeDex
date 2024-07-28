@@ -89,7 +89,7 @@
           <div class="card-img"><img [src]="filteredPokemonList[i].img" /></div>
           <div class="card-content">
             <div>
-              <p>Type</p>
+              <p class="font-semibold">Type</p>
             </div>
             <div>
               <p
@@ -97,8 +97,10 @@
                   let type of filteredPokemonList[i].types;
                   let last = last
                 "
+                [ngClass]="type.type.name"
+                class="pokeType"
               >
-                {{ type.type.name }}<span *ngIf="!last">,&nbsp;</span>
+                {{ type.type.name }}
               </p>
             </div>
           </div>
