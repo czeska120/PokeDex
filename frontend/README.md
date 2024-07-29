@@ -1,27 +1,100 @@
-# Pokedex
+<a id="readme-top"></a>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.1.0.
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+        <li><a href="#optional-configuration">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
 
-## Development server
+  </ol>
+</details>
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## About The Project
 
-## Code scaffolding
+PokeDex is a simple catalogue webpage where you can list and view details of the Pokemons utilizing the [PokeAPI][PokeAPI-url]. The following are implemented features:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Search Pokemon by ID or Name
+- Sort Pokemon by ID or Name
+- View Pokemon by paginated listing
+- View more details in a card
+- View next and previous Pokemons on detailed card view
 
-## Build
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Built With
 
-## Running unit tests
+- [![Angular][Angular.io]][Angular-url]
+- [![Tailwind][Tailwind.io]][Tailwind-url]
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Getting Started
 
-## Running end-to-end tests
+### Prerequisites
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+NPM must be installed in your PC. To do this:
 
-## Further help
+```sh
+npm install npm@latest -g
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### Installation
+
+1. Clone the repo
+   ```sh
+   git clone https://github.com/czeska120/PokeDex
+   ```
+2. Once inside the local copy of the repository, change directory to `frontend`
+
+   ```sh
+    cd frontend
+   ```
+
+3. Install NPM packages
+   ```sh
+   npm install
+   ```
+4. Run server using the command `ng serve`
+   ```sh
+   ng serve
+   ```
+   _Note: At first load, it may take a while to load the number of Pokemon. The current limit load is set to `30`._
+
+### Optional Configuration
+
+You may opt to change the limit of loaded Pokemon.
+
+1. Navigate to the `api.service.ts` file.
+2. Edit the limit number in the `getAllPokemon()` function. It is currently set to `30`.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Acknowledgments
+
+These are the resources used for this project:
+
+- [PokeAPI][PokeAPI-url]
+- [Tailwind][Tailwind-url]
+- [README.md file template][README-url]
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+[Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
+[Angular-url]: https://angular.io/
+[Tailwind.io]: https://img.shields.io/badge/tailwindcss-0F172A?style=for-the-badge&logo=tailwindcss
+[Tailwind-url]: https://tailwindcss.com/
+[PokeAPI-url]: https://pokeapi.co/
+[README-url]: https://github.com/othneildrew/Best-README-Template

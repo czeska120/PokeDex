@@ -62,23 +62,29 @@ export class AppComponent {
     const url = pokemon.url;
 
     return new Promise((resolve, reject) => {
-      this.pokedex.getPokemonData(url).subscribe((res) => {
-        const pokemonData = res;
-        // Pad ID with leading zeroes
-        const id = res.id.toString().padStart(3, '0');
+      this.pokedex.getPokemonData(url).subscribe({
+        next: (res) => {
+          const pokemonData = res;
+          // Pad ID with leading zeroes
+          const id = res.id.toString().padStart(3, '0');
 
-        this.pokedex.getPokemonPicture(id).subscribe((blob: any) => {
-          try {
-            const objectURL = URL.createObjectURL(blob);
-            pokemonData['img'] =
-              this.sanitizer.bypassSecurityTrustUrl(objectURL);
-            this.pokemonList.push(pokemonData);
-            resolve();
-          } catch (err) {
-            reject(err);
-          }
-        }, reject);
-      }, reject);
+          this.pokedex.getPokemonPicture(id).subscribe({
+            next: (blob: any) => {
+              const objectURL = URL.createObjectURL(blob);
+              pokemonData['img'] =
+                this.sanitizer.bypassSecurityTrustUrl(objectURL);
+              this.pokemonList.push(pokemonData);
+              resolve();
+            },
+            error: (err) => {
+              reject(err);
+            },
+          });
+        },
+        error: (err) => {
+          reject(err);
+        },
+      });
     });
   }
 
@@ -342,11 +348,11 @@ export class AppComponent {
   }
 
   onNext(id: number) {
-    id++;
+    if (this.pokemonList.length != id) id++;
     this.cardDetails(id);
   }
   onPrevious(id: number) {
-    id--;
+    if (1 != id) id--;
     this.cardDetails(id);
   }
 
